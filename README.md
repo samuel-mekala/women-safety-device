@@ -103,13 +103,7 @@ Every cycle:
 
 ```
 women-safety-device/
-├── firmware/
-│   └── safety_device.ino      # Main Arduino sketch
-├── schematics/
-│   └── circuit_diagram.png    # Hardware wiring diagram
-├── docs/
-│   └── project_report.pdf
-└── README.md
+└── women_safety_device.ino            ← actual GPS+fingerprint+GSM code
 ```
 
 ---
