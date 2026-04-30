@@ -116,70 +116,38 @@ women-safety-device/
 
 ## 🚀 How to Deploy
 
-### Step 1 — Install Arduino IDE
-
-Download and install from: https://www.arduino.cc/en/software
-
-### Step 2 — Install required libraries
-
-Open Arduino IDE → **Sketch → Include Library → Manage Libraries**, then search and install:
-
-|Library                 |Search for                           |
-|------------------------|-------------------------------------|
-|`Adafruit_Fingerprint.h`|`Adafruit Fingerprint Sensor Library`|
-|`TinyGPS.h`             |`TinyGPS`                            |
-|`LiquidCrystal.h`       |Built-in — no install needed         |
-|`SoftwareSerial.h`      |Built-in — no install needed         |
-
-### Step 3 — Update emergency contact numbers
-
-Open `women_safety_device.ino` and find the `send_sms()` function.  
-Replace the phone numbers with your actual emergency contacts:
-
-```c
-Serial.print("AT+CMGS=\"9949592453\"\r\n");  // ← Replace with Contact 1
-Serial.print("AT+CMGS=\"8978137886\"\r\n");  // ← Replace with Contact 2
-Serial.println("ATD8978137886;");             // ← Replace with number to call
 ```
+1. Install required libraries in Arduino IDE
+   (Sketch → Include Library → Manage Libraries):
+   - Adafruit Fingerprint Sensor Library
+   - TinyGPS
+   (LiquidCrystal and SoftwareSerial are built-in — no install needed)
 
-### Step 4 — Wire the hardware
+2. Update emergency contact numbers in women_safety_device.ino:
+   Serial.print("AT+CMGS=\"XXXXXXXXXX\"\r\n");  ← Contact 1
+   Serial.print("AT+CMGS=\"XXXXXXXXXX\"\r\n");  ← Contact 2
+   Serial.println("ATDXXXXXXXXXX;");             ← Number to call
 
-Connect components to Arduino Uno as per pin definitions in the sketch:
+3. Wire components to Arduino Uno:
+   - LCD (16×2)          : RS=8, E=9, D4=10, D5=11, D6=12, D7=13
+   - Fingerprint sensor  : RX=2, TX=3 (SoftwareSerial) · VCC=3.3V
+   - Buzzer              : Pin 5
+   - Enroll button       : Pin 6
+   - GPS + GSM modules   : Hardware Serial (pins 0/1) at 9600 baud
 
-|Component         |Pins                                  |
-|------------------|--------------------------------------|
-|LCD (16×2)        |RS=8, E=9, D4=10, D5=11, D6=12, D7=13 |
-|Fingerprint sensor|RX=2, TX=3 (SoftwareSerial) · VCC=3.3V|
-|GPS module        |Shares Serial (pin 0/1) at 9600 baud  |
-|GSM module        |Shares Serial at 9600 baud            |
-|Buzzer            |Pin 5                                 |
-|Enroll button     |Pin 6 (INPUT_PULLUP)                  |
+4. Open women_safety_device.ino in Arduino IDE
+5. Select Board: Arduino Uno → select correct COM Port → Upload
 
+6. Enroll fingerprint (first time only):
+   - Hold enroll button (pin 6) while powering on
+   - LCD shows ENROL.. → place finger → remove → place again
+   - Enrollment confirmed on LCD
 
-> **Note:** GPS and GSM both share the hardware Serial in this sketch. For a real deployment, use an Arduino Mega which has multiple hardware Serial ports (Serial1, Serial2) to separate them.
-
-### Step 5 — Upload the sketch
-
-1. Connect Arduino Uno to your PC via USB
-1. Open `women_safety_device.ino` in Arduino IDE
-1. Go to **Tools → Board → Arduino Uno**
-1. Go to **Tools → Port** → select the correct COM port
-1. Click **Upload** (→ arrow button)
-
-### Step 6 — Enroll your fingerprint (first time only)
-
-1. **Hold the enroll button (pin 6) while powering on** the device
-1. LCD will show `ENROL..`
-1. Place your finger on the sensor when prompted
-1. Remove finger, then place the same finger again
-1. LCD confirms enrollment — device is ready
-
-### Step 7 — Normal operation
-
-1. Power on the device (without holding enroll button)
-1. LCD shows `SCAN THUMB..` with live GPS coordinates
-1. Place registered finger → buzzer sounds briefly → SMS alert sent to emergency contacts with Google Maps link
-1. Device is now active and monitoring
+7. Normal operation:
+   - Power on without holding enroll button
+   - LCD shows SCAN THUMB.. with live GPS coordinates
+   - Place registered finger → buzzer sounds → SMS + call sent to emergency contacts
+```
 
 -----
 
