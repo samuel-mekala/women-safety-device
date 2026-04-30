@@ -113,7 +113,7 @@ women-safety-device/
 ```
 1. Wire components as per circuit diagram
 2. Flash firmware using Arduino IDE:
-   - Open firmware/safety_device.ino
+   - Open firmware/women_safety_device.ino
    - Select Board: Arduino Uno
    - Upload
 3. Enroll fingerprint via Serial Monitor:
