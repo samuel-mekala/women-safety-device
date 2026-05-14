@@ -8,42 +8,63 @@
 
 ## 📌 Overview
 
-In cases of women’s safety emergencies, traditional phone-based apps fail — the phone may be grabbed, broken, or inaccessible. This project solves that.
-
-We built a **standalone embedded IoT safety device** that:
-
-- Requires **no smartphone** to operate
-- Uses **fingerprint authentication** to prevent misuse
-- Sends the user’s **live GPS coordinates via SMS** to emergency contacts
-- Sounds a **buzzer alarm** to alert nearby people
-- **Works automatically** — if the woman doesn’t check in within 1 minute, it triggers on its own
+A standalone embedded IoT safety device that sends **automatic GPS-location SMS alerts** to emergency contacts when the user is in danger — even if unconscious or unable to act.
+ 
+**Key insight:** The device works in reverse — it alerts automatically if the user *stops* checking in, rather than requiring them to press a button when attacked.
 
 -----
 
-## 🔐 How It Works
+## 🔧 Hardware Prototype
+ 
+![Hardware Prototype](images/hardware_prototype.png)
+ 
+---
+ 
+## 🏗️ System Architecture
+ 
+![System Block Diagram](images/system_block_diagram.png)
+ 
+---
 
+## ⚙️ How It Works
+ 
+![Flowchart](images/flowchart.png)
+ 
 ```
-DEVICE SETUP
-    → Woman registers fingerprint on device
-    → Emergency contact numbers stored in GSM module
-
-DEVICE ACTIVATED (woman turns it on)
+DEVICE ACTIVATED
     ↓
-  Continuous fingerprint scan expected every 60 seconds
+Continuous fingerprint scan required every 60 seconds
     ↓
-NORMAL: Fingerprint detected → System stays silent
+SAFE: Finger detected → timer resets → stays silent
     ↓
-EMERGENCY: No fingerprint for 60s (unconscious, attacked, restrained)
+DANGER: No scan for 60s (unconscious / attacked / restrained)
     ↓
-  ┌─────────────────────┐    ┌────────────────────────────────────┐
-  │  BUZZER SOUNDS      │    │  SMS SENT with Google Maps Link    │
-  │  (alerts bystanders)│    │  "Coordinates: lat, lon → Maps URL"│
-  └─────────────────────┘    └────────────────────────────────────┘
+  ┌─────────────────────┐    ┌────────────────────────────────┐
+  │  BUZZER SOUNDS      │    │  SMS + Google Maps link sent   │
+  │  (alerts bystanders)│    │  to all emergency contacts     │
+  └─────────────────────┘    └────────────────────────────────┘
 ```
-
 **Key Insight:** The user doesn’t need to *do* anything in an emergency — the device acts automatically if she *stops* responding.
 
 -----
+
+## 📱 SMS Alert
+ 
+![SMS Alert Screenshot](images/sms_alert_screenshot.png)
+ 
+**SMS format:**
+```
+Alert: Person is in danger at Loc:
+https://www.google.com/maps/search/?api=1&query=LAT,LON
+```
+ 
+---
+ 
+## 🔌 Circuit Diagram
+ 
+![Circuit Diagram](images/circuit_diagram.png)
+ 
+---
 
 ## 🔧 Hardware Components
 
@@ -104,52 +125,61 @@ Every cycle:
 
 -----
 
-## 📁 Project Structure
-
+### 📁 Project Structure
+ 
 ```
 women-safety-device/
-├── women_safety_device.ino    # Main Arduino sketch (fingerprint + GPS + GSM alerts)
+├── images/
+│   ├── hardware_prototype.png      # Actual hardware photo
+│   ├── circuit_diagram.png         # Full circuit diagram
+│   ├── system_block_diagram.png    # System architecture
+│   ├── flowchart.png               # Working flowchart
+│   └── sms_alert_screenshot.png   # SMS alert example
+├── women_safety_device.ino         # Main Arduino sketch
 └── README.md
 ```
-
------
+ 
+---
 
 ## 🚀 How to Deploy
-
+ 
 ```
 1. Install required libraries in Arduino IDE
    (Sketch → Include Library → Manage Libraries):
    - Adafruit Fingerprint Sensor Library
    - TinyGPS
-   (LiquidCrystal and SoftwareSerial are built-in — no install needed)
-
+   (LiquidCrystal and SoftwareSerial are built-in)
+ 
 2. Update emergency contact numbers in women_safety_device.ino:
    Serial.print("AT+CMGS=\"XXXXXXXXXX\"\r\n");  ← Contact 1
    Serial.print("AT+CMGS=\"XXXXXXXXXX\"\r\n");  ← Contact 2
-   Serial.println("ATDXXXXXXXXXX;");             ← Number to call
-
+ 
 3. Wire components to Arduino Uno:
-   - LCD (16×2)          : RS=8, E=9, D4=10, D5=11, D6=12, D7=13
-   - Fingerprint sensor  : RX=2, TX=3 (SoftwareSerial) · VCC=3.3V
-   - Buzzer              : Pin 5
-   - Enroll button       : Pin 6
-   - GPS + GSM modules   : Hardware Serial (pins 0/1) at 9600 baud
-
+   - LCD (16×2)         : RS=8, E=9, D4=10, D5=11, D6=12, D7=13
+   - Fingerprint sensor : RX=2, TX=3 · VCC=3.3V
+   - Buzzer             : Pin 5
+   - Enroll button      : Pin 6
+ 
 4. Open women_safety_device.ino in Arduino IDE
-5. Select Board: Arduino Uno → select correct COM Port → Upload
-
+5. Select Board: Arduino Uno → select COM Port → Upload
+ 
 6. Enroll fingerprint (first time only):
-   - Hold enroll button (pin 6) while powering on
-   - LCD shows ENROL.. → place finger → remove → place again
+   - Hold enroll button while powering on
+   - Place finger → remove → place again
    - Enrollment confirmed on LCD
-
+ 
 7. Normal operation:
-   - Power on without holding enroll button
-   - LCD shows SCAN THUMB.. with live GPS coordinates
-   - Place registered finger → buzzer sounds → SMS + call sent to emergency contacts
+   - Power on → LCD shows SCAN THUMB.. with live GPS coordinates
+   - Place registered finger every 60s to stay safe
+   - No scan for 60s → buzzer + SMS alert triggered automatically
 ```
+---
 
------
+## 📹 Demo Video
+ 
+🎥 [Watch Working Prototype →](https://drive.google.com/file/d/1TGw5IVlSfi0Cq1VD3_UB_F7JaSD6vcau/view?usp=sharing)
+ 
+---
 
 ## 🔮 Future Scope
 
@@ -161,10 +191,4 @@ women-safety-device/
 
 -----
 
-## 📹 Demo
-
-🎥 <a href="https://drive.google.com/file/d/1TGw5IVlSfi0Cq1VD3_UB_F7JaSD6vcau/view?usp=sharing" target="_blank">Working Prototype Video</a>
-
------
-
-*VIT-AP University · SCOPE · IoT & Embedded Systems Project*
+*VIT-AP University · SCOPE · ECS Project 231137*
