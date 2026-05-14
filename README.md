@@ -128,9 +128,8 @@ women-safety-device/
 ├── images/
 │   ├── hardware_prototype.png      # Actual hardware photo
 │   ├── circuit_diagram.png         # Full circuit diagram
-│   ├── system_block_diagram.png    # System architecture
-│   ├── flowchart.png               # Working flowchart
-│   └── sms_alert_screenshot.png   # SMS alert example
+│   ├── text_message.png            # Text message example
+│   └── location_coordinates.png    # location Coordinates example
 ├── women_safety_device.ino         # Main Arduino sketch
 └── README.md
 ```
