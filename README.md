@@ -131,6 +131,7 @@ women-safety-device/
 │   ├── text_message.png            # Text message example
 │   └── location_coordinates.png    # location Coordinates example
 ├── women_safety_device.ino         # Main Arduino sketch
+├── .gitignore
 └── README.md
 ```
  
