@@ -176,8 +176,8 @@ women-safety-device/
 ---
 
 ## 📹 Demo Video
- 
-🎥 [Watch Working Prototype →](https://drive.google.com/file/d/1TGw5IVlSfi0Cq1VD3_UB_F7JaSD6vcau/view?usp=sharing)
+
+🎥 [Watch Working Prototype →] <a href="https://drive.google.com/file/d/1TGw5IVlSfi0Cq1VD3_UB_F7JaSD6vcau/view?usp=sharing">https://drive.google.com/file/d/1TGw5IVlSfi0Cq1VD3_UB_F7JaSD6vcau/view?usp=sharing</a>
  
 ---
 
