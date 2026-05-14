@@ -27,9 +27,7 @@ A standalone embedded IoT safety device that sends **automatic GPS-location SMS 
 ---
 
 ## ⚙️ How It Works
- 
-![Flowchart](images/flowchart.png)
- 
+  
 ```
 DEVICE ACTIVATED
     ↓
@@ -49,6 +47,8 @@ DANGER: No scan for 60s (unconscious / attacked / restrained)
 -----
 
 ## 📱 SMS Alert
+
+![Flowchart](images/flowchart.png)
  
 ![SMS Alert Screenshot](images/sms_alert_screenshot.png)
  
