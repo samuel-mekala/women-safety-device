@@ -20,9 +20,9 @@ A standalone embedded IoT safety device that sends **automatic GPS-location SMS 
  
 ---
  
-## 🏗️ System Architecture
+## 🔌 Circuit Diagram
  
-![System Block Diagram](images/system_block_diagram.png)
+![Circuit Diagram](images/circuit_diagram.png)
  
 ---
 
@@ -48,21 +48,17 @@ DANGER: No scan for 60s (unconscious / attacked / restrained)
 
 ## 📱 SMS Alert
 
-![Flowchart](images/flowchart.png)
- 
-![SMS Alert Screenshot](images/sms_alert_screenshot.png)
+![Text Message](images/text_message.png)
+
+## 📍 Location Coordinates
+
+![SMS Alert Screenshot](images/location_coordinates.png)
  
 **SMS format:**
 ```
 Alert: Person is in danger at Loc:
 https://www.google.com/maps/search/?api=1&query=LAT,LON
 ```
- 
----
- 
-## 🔌 Circuit Diagram
- 
-![Circuit Diagram](images/circuit_diagram.png)
  
 ---
 
